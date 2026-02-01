@@ -73,18 +73,23 @@ function renderCart(){
 }
 
 function openConfirm(){
-  if(!cart.length) return alert('Cart is empty');
-  confirmAmount.innerText = `You will pay ${cart.reduce((a,b)=>a+b.priceEDS,0)} EDS`;
-  confirmModal.classList.remove('hidden');
+  if(cart.length === 0){
+    alert('Cart is empty');
+    return;
+  }
+
+  const total = cart.reduce((a,b)=>a+b.priceEDS,0);
+  confirmAmount.innerText = `You will pay ${total} EDS`;
+  confirmModal.classList.add('active');
 }
 
 function closeConfirm(){
-  confirmModal.classList.add('hidden');
+  confirmModal.classList.remove('active');
 }
 
 function confirmOrder(){
   orders.push(groupItems(cart));
-  cart=[];
+  cart = [];
   closeConfirm();
   showView('orders');
 }
