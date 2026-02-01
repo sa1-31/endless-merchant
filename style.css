@@ -16,8 +16,8 @@ body {
 
 /* Header */
 header {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
   padding: 1rem;
   border-bottom: 1px solid #444;
@@ -49,7 +49,20 @@ nav button {
 nav button:hover {
   color: #39FF14;
 }
+.center-nav {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+}
 
+.center-nav button {
+  font-size: 0.95rem;
+  opacity: 0.85;
+}
+
+.center-nav button:hover {
+  opacity: 1;
+}
 .wallet-button {
   background: #2b123f;
   color: #c77dff;
@@ -189,4 +202,22 @@ footer {
 }
 .modal.active {
   display: flex;
+}
+
+
+/* --- Mobile safety: navbar layout --- */
+@media (max-width: 600px) {
+  header {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .center-nav {
+    order: 3;
+  }
+
+  .wallet-button {
+    order: 2;
+    justify-self: flex-end;
+  }
 }
