@@ -88,7 +88,10 @@ function closeConfirm(){
 }
 
 function confirmOrder(){
-  orders.push(groupItems(cart));
+orders.push({
+  status: 'On the way',
+  items: groupItems(cart)
+});
   cart = [];
   closeConfirm();
   showView('orders');
@@ -97,13 +100,17 @@ function confirmOrder(){
 function renderOrders(){
   ordersView.classList.remove('hidden');
   ordersList.innerHTML='';
+
   orders.forEach(order=>{
-    order.forEach(i=>{
+    order.items.forEach(i=>{
       ordersList.innerHTML += `
         <div class="order-item">
           <div class="item-left">
             <img src="${i.img}">
-            <span>${i.name} ×${i.qty}</span>
+            <div>
+              <div>${i.name} ×${i.qty}</div>
+              <small style="opacity:.6">${order.status}</small>
+            </div>
           </div>
         </div>
       `;
