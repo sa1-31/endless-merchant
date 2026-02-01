@@ -44,9 +44,22 @@ function renderProducts(){
 }
 
 function addToCart(id){
-  cart.push(products.find(p=>p.id===id));
+  const product = products.find(p=>p.id===id);
+  
+  // Cart-a əlavə et
+  cart.push(product);
+
+  // Alert / bildiriş
+  alert(product.name + ' added to cart!');
+
+  // Cart menyusuna say göstər
+  updateCartCount();
 }
 
+function updateCartCount(){
+  const count = cart.length;
+  document.getElementById('cart-count').innerText = count;
+}
 function groupItems(arr){
   const map = {};
   arr.forEach(i => map[i.id] = map[i.id] ? {...i, qty: map[i.id].qty+1} : {...i, qty:1});
