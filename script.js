@@ -1,12 +1,12 @@
 const products = [
-  {id:1,name:"Endless Sweatshirt",priceEDS:300,img:"images/endless_sweatshirt.png"},
-  {id:2,name:"Endless Beanie",priceEDS:150,img:"images/endless_beanie.png"},
-  {id:3,name:"Endless Jacket",priceEDS:500,img:"images/endless_jacket.png"},
-  {id:4,name:"Endless Watch",priceEDS:800,img:"images/endless_watch.png"},
-  {id:5,name:"Nessy Sweatshirt",priceEDS:350,img:"images/nessy_sweatshirt.png"},
-  {id:6,name:"Nessy Beanie",priceEDS:180,img:"images/nessy_beanie.png"},
-  {id:7,name:"Nessy Jacket",priceEDS:520,img:"images/nessy_jacket.png"},
-  {id:8,name:"Nessy Watch",priceEDS:820,img:"images/nessy_watch.png"}
+  {id:1,name:"Endless Sweatshirt",priceEDS:300,img:"images/endless-sweatshirt.png"},
+  {id:2,name:"Endless Beanie",priceEDS:150,img:"images/endless-beanie.png"},
+  {id:3,name:"Endless Jacket",priceEDS:500,img:"images/endless-jacket.png"},
+  {id:4,name:"Endless Watch",priceEDS:800,img:"images/endless-watch.png"},
+  {id:5,name:"Nessy Sweatshirt",priceEDS:350,img:"images/nessy-sweatshirt.png"},
+  {id:6,name:"Nessy Beanie",priceEDS:180,img:"images/nessy-beanie.png"},
+  {id:7,name:"Nessy Jacket",priceEDS:520,img:"images/nessy-jacket.png"},
+  {id:8,name:"Nessy Watch",priceEDS:820,img:"images/nessy-watch.png"}
 ];
 
 let cart = [];
