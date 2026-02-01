@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Endless Merchant</title>
+<style>
+  /* --- Basic Reset --- */
+  * { margin:0; padding:0; box-sizing:border-box; font-family:sans-serif; }
+  body { background-color:#000; color:#fff; min-height:100vh; }
+
+  /* --- Neon Styles --- */
+  .neon-text { text-shadow:0 0 5px #39FF14, 0 0 10px #39FF14; }
+  .neon-button { background-color:#39FF14; color:#000; border:none; padding:8px 16px; border-radius:5px; cursor:pointer; transition:0.2s; }
+  .neon-button:hover { box-shadow:0 0 10px #39FF14, 0 0 20px #39FF14; }
+
+  /* --- Header --- */
+  header { display:flex; justify-content:space-between; align-items:center; padding:1rem; border-bottom:1px solid #444; }
+  nav button { background:none; border:none; color:#fff; margin:0 5px; cursor:pointer; transition:0.2s; }
+  nav button:hover { color:#39FF14; }
+
+  /* --- Layout --- */
+  main { padding:1rem; }
+  .products-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; }
+  .product-card { background:#111; padding:1rem; border-radius:10px; text-align:center; transition:0.2s; }
+  .product-card:hover { box-shadow:0 0 10px #39FF14; }
+  .product-card img { width:100%; height:150px; object-fit:contain; margin-bottom:0.5rem; }
+
+  /* --- Cart / Orders --- */
+  .cart-item, .order-item { background:#111; padding:0.5rem; border-radius:8px; display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem; }
+  .cart-item img, .order-item img { width:50px; height:50px; object-fit:contain; margin-right:0.5rem; }
+  .hidden { display:none; }
+
+  /* --- Buttons --- */
+  .remove-button { background:red; color:#fff; border:none; padding:4px 8px; border-radius:4px; cursor:pointer; }
+  .remove-button:hover { opacity:0.8; }
+
+  /* --- Connect Wallet --- */
+  .wallet-button { background:#222; color:#39FF14; border:none; padding:6px 12px; border-radius:5px; cursor:pointer; transition:0.2s; }
+  .wallet-button:hover { background:#111; }
+
+  /* --- Responsive --- */
+  @media(max-width:600px) { .product-card img { height:120px; } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1 class="neon-text">Endless Merchant</h1>
+  <nav>
+    <button onclick="showView('products')">Products</button>
+    <button onclick="showView('cart')">Cart</button>
+    <button onclick="showView('orders')">Orders</button>
+  </nav>
+  <button class="wallet-button" onclick="connectWallet()" id="walletBtn">Connect Wallet</button>
+</header>
+
+<main>
+  <!-- Products -->
+  <div id="productsView" class="products-grid"></div>
+
+  <!-- Cart -->
+  <div id="cartView" class="hidden">
+    <h2 class="neon-text">Your Cart</h2>
+    <div id="cartItems"></div>
+    <p id="cartTotal"></p>
+    <button class="neon-button" onclick="orderNow()">Order Now</button>
+  </div>
+
+  <!-- Orders -->
+  <div id="ordersView" class="hidden">
+    <h2 class="neon-text">Your Orders</h2>
+    <div id="ordersList"></div>
+  </div>
+</main>
+
+<script>
+const products = [
+  {id:1,name:"Endless Sweatshirt",priceEDS:300,img:"images/endless_sweatshirt.png"},
+  {id:2,name:"Endless Beanie",priceEDS:150,img:"images/endless_beanie.png"},
+  {id:3,name:"Endless Jacket",priceEDS:500,img:"images/endless_jacket.png"},
+  {id:4,name:"Endless Watch",priceEDS:800,img:"images/endless_watch.png"},
+  {id:5,name:"Nessy Sweatshirt",priceEDS:350,img:"images/nessy_sweatshirt.png"},
+  {id:6,name:"Nessy Beanie",priceEDS:180,img:"images/nessy_beanie.png"},
+  {id:7,name:"Nessy Jacket",priceEDS:520,img:"images/nessy_jacket.png"},
+  {id:8,name:"Nessy Watch",priceEDS:820,img:"images/nessy_watch.png"}
+];
+
+let cart = [];
+let orders = [];
+let wallet = null;
+
+function showView(view){
+  document.getElementById('productsView').classList.add('hidden');
+  document.getElementById('cartView').classList.add('hidden');
+  document.getElementById('ordersView').classList.add('hidden');
+  if(view==='products') renderProducts();
+  if(view==='cart') renderCart();
+  if(view==='orders') renderOrders();
+}
+
+function connectWallet(){
+  wallet = '0xABCD1234EFGH';
+  document.getElementById('walletBtn').innerText = wallet.slice(0,6)+'...'+wallet.slice(-4);
+}
+
+function renderProducts(){
+  const container = document.getElementById('productsView');
+  container.classList.remove('hidden');
+  container.innerHTML = '';
+  products.forEach(p=>{
+    const div = document.createElement('div');
+    div.className='product-card';
+    div.innerHTML = `
+      <img src="${p.img}" alt="${p.name}">
+      <h3>${p.name}</h3>
+      <p>${p.priceEDS} EDS (~$${(p.priceEDS*0.01).toFixed(2)})</p>
+      <button class="neon-button" onclick="addToCart(${p.id})">Add to Cart</button>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function addToCart(id){
+  const product = products.find(p=>p.id===id);
+  cart.push(product);
+  alert(product.name+' added to cart!');
+}
+
+function renderCart(){
+  const container = document.getElementById('cartView');
+  container.classList.remove('hidden');
+  const itemsDiv = document.getElementById('cartItems');
+  itemsDiv.innerHTML='';
+  cart.forEach((item,index)=>{
+    const div = document.createElement('div');
+    div.className='cart-item';
+    div.innerHTML = `<img src="${item.img}"><span>${item.name} - ${item.priceEDS} EDS</span>
+      <button class="remove-button" onclick="removeFromCart(${index})">Remove</button>`;
+    itemsDiv.appendChild(div);
+  });
+  const total = cart.reduce((a,b)=>a+b.priceEDS,0);
+  document.getElementById('cartTotal').innerText='Total: '+total+' EDS (~$'+(total*0.01).toFixed(2)+')';
+}
+
+function removeFromCart(index){
+  cart.splice(index,1);
+  renderCart();
+}
+
+function orderNow(){
+  if(cart.length===0) { alert('Cart is empty'); return; }
+  orders.push({items:[...cart],status:'On the way'});
+  cart=[];
+  alert('Order placed!');
+  showView('orders');
+}
+
+function renderOrders(){
+  const container = document.getElementById('ordersView');
+  container.classList.remove('hidden');
+  const listDiv = document.getElementById('ordersList');
+  listDiv.innerHTML='';
+  orders.forEach((order,i)=>{
+    const div = document.createElement('div');
+    div.className='order-item';
+    div.innerHTML=`
+      <div>${order.items.map(it=>it.name+' - '+it.priceEDS+' EDS').join('<br>')}</div>
+      <span>Status: ${order.status}</span>
+    `;
+    listDiv.appendChild(div);
+  });
+}
+
+// Initialize default view
+showView('products');
+</script>
+
+</body>
+</html>
