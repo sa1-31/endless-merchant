@@ -51,12 +51,18 @@ nav button:hover {
 }
 
 .wallet-button {
-  background: #222;
-  color: #39FF14;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 6px;
+  background: #2b123f;
+  color: #c77dff;
+  border: 1px solid #c77dff;
+  padding: 6px 14px;
+  border-radius: 8px;
   cursor: pointer;
+  box-shadow: 0 0 8px rgba(199,125,255,0.5);
+  transition: 0.2s;
+}
+
+.wallet-button:hover {
+  box-shadow: 0 0 14px rgba(199,125,255,0.9);
 }
 
 /* Main */
