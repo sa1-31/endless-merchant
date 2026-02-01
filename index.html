@@ -9,20 +9,20 @@
 <body>
 
 <header>
-  <div class="logo-area">
+  <div class="header-left">
     <img src="images/endless-logo.png" class="logo-img">
     <h1>Endless Merchant</h1>
   </div>
+
+  <button class="wallet-button" onclick="connectWallet()" id="walletBtn">
+    Connect Wallet
+  </button>
 
   <nav class="center-nav">
     <button onclick="showView('products')">Products</button>
     <button onclick="showView('cart')">Cart</button>
     <button onclick="showView('orders')">Orders</button>
   </nav>
-
-  <button class="wallet-button" onclick="connectWallet()" id="walletBtn">
-    Connect Wallet
-  </button>
 </header>
 
 <main>
